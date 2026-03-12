@@ -10,7 +10,10 @@ module FrozenRecord
 
         ensure_model_class_is_frozenrecord(model_class)
 
-        return if @cache.key?(model_class)
+        if @cache.key?(model_class)
+          return if model_class.base_path.to_s == alternate_base_path.to_s
+          unload_fixture(model_class)
+        end
 
         @cache[model_class] = base_path_if_file_present(model_class)
 
