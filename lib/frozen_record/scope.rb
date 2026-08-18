@@ -78,6 +78,12 @@ module FrozenRecord
       end
     end
 
+    def pick(*attributes)
+      raise NotImplementedError, '`.pick` without arguments is not supported yet' if attributes.empty?
+
+      limit(1).pluck(*attributes).first
+    end
+
     def ids
       pluck(primary_key)
     end
